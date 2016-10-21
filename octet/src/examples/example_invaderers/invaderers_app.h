@@ -95,7 +95,7 @@ namespace octet {
       glEnableVertexAttribArray(attribute_uv);
     
       // finally, draw the sprite (4 vertices)
-      glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	  glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     }
 
     // move the object
@@ -238,7 +238,7 @@ namespace octet {
 
     // use the keyboard to move the ship
     void move_ship() {
-      const float ship_speed = 0.05f;
+      const float ship_speed = 0.5f;
       // left and right arrows
       if (is_key_down(key_left)) {
         sprites[ship_sprite].translate(-ship_speed, 0);
@@ -263,7 +263,7 @@ namespace octet {
           if (!sprites[first_missile_sprite+i].is_enabled()) {
             sprites[first_missile_sprite+i].set_relative(sprites[ship_sprite], 0, 0.5f);
             sprites[first_missile_sprite+i].is_enabled() = true;
-            missiles_disabled = 5;
+            missiles_disabled = 1;
             ALuint source = get_sound_source();
             alSourcei(source, AL_BUFFER, whoosh);
             alSourcePlay(source);
@@ -288,7 +288,7 @@ namespace octet {
               if (!sprites[first_bomb_sprite+i].is_enabled()) {
                 sprites[first_bomb_sprite+i].set_relative(invaderer, 0, -0.25f);
                 sprites[first_bomb_sprite+i].is_enabled() = true;
-                bombs_disabled = 30;
+                bombs_disabled = 1;
                 ALuint source = get_sound_source();
                 alSourcei(source, AL_BUFFER, whoosh);
                 alSourcePlay(source);

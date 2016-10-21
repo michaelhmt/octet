@@ -29,7 +29,12 @@ namespace octet { namespace shaders {
 
         uniform mat4 modelToProjection;
 
-        void main() { gl_Position = modelToProjection * pos; uv_ = uv; }
+      void main() { gl_Position = modelToProjection * pos; uv_ = uv;
+
+
+//vColor = gl_Color;
+	//gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex
+		}
       );
 
       // this is the fragment shader
@@ -38,8 +43,15 @@ namespace octet { namespace shaders {
       // it outputs gl_FragColor, the color of the pixel and inputs uv_
       const char fragment_shader[] = SHADER_STR(
         varying vec2 uv_;
-        uniform sampler2D sampler;
-        void main() { gl_FragColor = texture2D(sampler, uv_); }
+        uniform sampler2D sampler; 
+        void main() { gl_FragColor = texture2D(sampler, uv_) * vec4(1, 0, 1, 1); //vec4 controls the tinting of the shader dont chnage the last 1 it the alpha
+		//gl_FragColor = (-1.0, 0, 0, 0);
+		//glColor3b(255, 0, 0);
+		//vec4(colorVarying.rgb, texture2D(Sampler, gl_PointCoord).a)
+		//texture2D(sampler, uv_);
+
+		}
+
       );
     
       // use the common shader code to compile and link the shaders
@@ -54,6 +66,7 @@ namespace octet { namespace shaders {
     void render(const mat4t &modelToProjection, int sampler) {
       // tell openGL to use the program
       shader::render();
+	  
 
       // customize the program with uniforms
       glUniform1i(samplerIndex_, sampler);
