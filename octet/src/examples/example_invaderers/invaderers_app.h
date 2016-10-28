@@ -148,7 +148,7 @@ namespace octet {
       num_sound_sources = 8,
       num_rows = 5,
       num_cols = 10,
-      num_missiles = 2,
+      num_missiles = 3,
       num_bombs = 2,
       num_borders = 4,
       num_invaderers = num_rows * num_cols,
@@ -238,19 +238,34 @@ namespace octet {
 
     // use the keyboard to move the ship
     void move_ship() {
-      const float ship_speed = 0.5f;
+      const float ship_speed = 0.2f;
       // left and right arrows
       if (is_key_down(key_left)) {
         sprites[ship_sprite].translate(-ship_speed, 0);
         if (sprites[ship_sprite].collides_with(sprites[first_border_sprite+2])) {
           sprites[ship_sprite].translate(+ship_speed, 0);
         }
-      } else if (is_key_down(key_right)) {
-        sprites[ship_sprite].translate(+ship_speed, 0);
-        if (sprites[ship_sprite].collides_with(sprites[first_border_sprite+3])) {
-          sprites[ship_sprite].translate(-ship_speed, 0);
-        }
-      }
+	  }
+	   else if (is_key_down(key_right)) {
+		  sprites[ship_sprite].translate(+ship_speed, 0);
+		  if (sprites[ship_sprite].collides_with(sprites[first_border_sprite + 3])) {
+			  sprites[ship_sprite].translate(-ship_speed, 0);
+		  }
+	  }
+		  if (is_key_down(key_up)) {
+			  sprites[ship_sprite].translate(0, +ship_speed);
+			  if (sprites[ship_sprite].collides_with(sprites[first_border_sprite + 1])) {
+				  sprites[ship_sprite].translate(0, -ship_speed);
+			  }
+		  }
+		   if (is_key_down(key_down)) {
+			  sprites[ship_sprite].translate(0, -ship_speed);
+			  if (sprites[ship_sprite].collides_with(sprites[first_border_sprite + 0])) {
+				  sprites[ship_sprite].translate(0, +ship_speed);
+			  }
+
+		  }
+	  
     }
 
     // fire button (space)
@@ -259,7 +274,7 @@ namespace octet {
         --missiles_disabled;
       } else if (is_key_going_down(' ')) {
         // find a missile
-        for (int i = 0; i != num_missiles; ++i) {
+        for (int i = 0; i != num_missiles; ++i) {  //I is a counter, compare I to num missles, increases it 
           if (!sprites[first_missile_sprite+i].is_enabled()) {
             sprites[first_missile_sprite+i].set_relative(sprites[ship_sprite], 0, 0.5f);
             sprites[first_missile_sprite+i].is_enabled() = true;
